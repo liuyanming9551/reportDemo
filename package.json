@@ -4,20 +4,25 @@
     "start": "umi dev",
     "build": "umi build",
     "test": "umi test",
-    
     "lint": "eslint --ext .js src mock tests",
-    
-    
     "precommit": "lint-staged"
   },
   "dependencies": {
-    
-    
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "ag-grid-community": "^21.1.0",
+    "ag-grid-react": "^21.1.0",
+    "classnames": "^2.2.6",
+    "node-sass": "^4.12.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dnd": "^9.3.2",
+    "react-dnd-html5-backend": "^9.3.2",
+    "react-dom": "^16.8.6",
+    "react-resizable": "^1.8.0",
+    "sass-loader": "^7.1.0"
   },
   "devDependencies": {
-    
     "babel-eslint": "^9.0.0",
     "eslint": "^5.4.0",
     "eslint-config-umi": "^1.4.0",
@@ -28,14 +33,14 @@
     "husky": "^0.14.3",
     "lint-staged": "^7.2.2",
     "react-test-renderer": "^16.7.0",
-    
     "umi": "^2.7.7",
     "umi-plugin-react": "^1.8.4"
-    
-    },
+  },
   "lint-staged": {
-    
-    "*.{js,jsx}": ["eslint --fix", "git add"]
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "engines": {
     "node": ">=8.0.0"
