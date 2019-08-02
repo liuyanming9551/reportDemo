@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-blue.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import styles from './styles.less';
+import custom from './custom.less';
 
 export default class GridExample extends Component {
   constructor(props) {
@@ -11,10 +12,11 @@ export default class GridExample extends Component {
     this.state = {
       columnDefs: [
         {
-          headerName:"姓名",
-          field:"name",
-          width:"90",
-          pinned: 'left'
+          headerName: '姓名',
+          colId: 'test',
+          pinned: 'left',
+          lockPinned: true,
+          groupHeaderHeight: 0,
         },
         {
           headerName: 'Athlete Details',
@@ -22,7 +24,7 @@ export default class GridExample extends Component {
             {
               headerName: 'Athlete',
               field: 'athlete',
-              width: 200,
+              width: 90,
               type: 'nonEditableColumn',
             },
             {
@@ -82,14 +84,15 @@ export default class GridExample extends Component {
       // frameworkComponents: { customHeaderGroupComponent: CustomHeaderGroup },
       rowData: null,
       defaultColDef: {
-        width: 200,
+        width: 90,
         resizable: true,
         editable: true,
 
       },
-      isDrag:null,
+      isDrag: null,
       headerHeight: 50,
       groupHeaderHeight: 50,
+      isShow:true,
       columnTypes: {
         nonEditableColumn: { editable: false },
       },
@@ -130,12 +133,15 @@ export default class GridExample extends Component {
     console.log(this.gridApi.setAlwaysShowVerticalScroll());
 
   };
-  columnMoved = (e) =>{
-    console.log(e)
+  columnMoved = (e) => {
+    console.log(e);
     const { allDisplayedColumns } = e.columnApi.columnController;
     const [ columnObj ] = e.columns;
-    console.log(columnObj.headerName='')
-
+    // console.log(columnObj)
+    // console.log("isMoving",columnObj.moving)
+    // console.log(columnObj.headerName='')
+    console.log(allDisplayedColumns)
+    console.log(allDisplayedColumns[allDisplayedColumns.length-1])
     // allDisplayedColumns.map(function(item,index) {
     //   console.log(item,index)
     //   if(item.moving){
@@ -145,13 +151,13 @@ export default class GridExample extends Component {
 
     //this.gridColumnApi.moveColumns(["测试"], 0);
 
-  }
+  };
   dragStopped = (e) => {
     //console.log(e)
 
     //console.log(allDisplayedColumns)
     //console.log("this.api",e)
-  }
+  };
 
   addColumn = () => {
     console.log('添加列');
@@ -159,9 +165,9 @@ export default class GridExample extends Component {
     //   headerName: 'test'
     // },
     var obj = {
-      headerName:"测试",
+      headerName: '测试',
       field: '测试',
-      originName:"测试"
+      originName: '测试',
     };
     const { columnDefs } = this.state;
     columnDefs.push(obj);
@@ -175,32 +181,43 @@ export default class GridExample extends Component {
   render() {
     return (
       <div style={{ height: '100%', position: 'relative' }} className={styles.noDataInfo}>
-        <div
-          id="myGrid"
-          style={{
-            height: '500px',
-            paddingLeft: '100px',
-            paddingRight: '200px',
-          }}
-          className="ag-theme-blue"
-        >
-          <AgGridReact
-            ref='agGrid'
-            columnDefs={this.state.columnDefs}
-            // frameworkComponents={this.state.frameworkComponents}
-            columnTypes={this.state.columnTypes}
-            rowDragManaged={true}
-            domLayout='autoHeight'
-            rowData={this.state.rowData}
-            defaultColDef={this.state.defaultColDef}
-            onGridReady={this.onGridReady}
-            headerHeight={50}
-            groupHeaderHeight={50}
-            onColumnMoved={this.columnMoved}
-            onCellClicked={this.cellClick}
-            onDragStopped={this.dragStopped}
-          />
+
+        <div className={custom.customTable}>
+          <div className="index__customTable">
+            <div className='index__tableBar'>
+              <div
+                id="myGrid"
+                style={{
+                  height: '500px',
+                  paddingLeft: '100px',
+                  paddingRight: '200px',
+                }}
+                className="ag-theme-balham"
+              >
+                <AgGridReact
+                  ref='agGrid'
+                  columnDefs={this.state.columnDefs}
+                  // frameworkComponents={this.state.frameworkComponents}
+                  columnTypes={this.state.columnTypes}
+                  rowDragManaged={true}
+                  domLayout='autoHeight'
+                  rowData={this.state.rowData}
+                  defaultColDef={this.state.defaultColDef}
+                  onGridReady={this.onGridReady}
+                  headerHeight={40}
+                  groupHeaderHeight={40}
+                  onColumnMoved={this.columnMoved}
+                  onCellClicked={this.cellClick}
+                  onDragStopped={this.dragStopped}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="index__fieldInfo">
+
+          </div>
         </div>
+
         {/*<div className={styles.btnLeft} onClick={this.leftScroll}>left</div>*/}
         <div className={styles.addColumn} onClick={this.addColumn}>+</div>
         {/*<div className={styles.btnRight} onClick={this.rightScroll}>right</div>*/}
